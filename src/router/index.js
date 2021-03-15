@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import store from '../store'
 
 const routes = [
   {
@@ -7,8 +8,8 @@ const routes = [
     component: () => import('../views/Shop.vue'),
     meta: {
       layout: 'main',
-      auth: true
-    }
+      auth: true,
+    },
   },
   {
     path: '/auth',
@@ -16,8 +17,8 @@ const routes = [
     component: () => import('../views/Auth.vue'),
     meta: {
       layout: 'auth',
-      auth: true
-    }
+      auth: false,
+    },
   },
   {
     path: '/product:id',
@@ -25,8 +26,8 @@ const routes = [
     component: () => import('../views/Product.vue'),
     props: true,
     meta: {
-      layout: 'main'
-    }
+      layout: 'main',
+    },
   },
   {
     path: '/cart',
@@ -34,16 +35,29 @@ const routes = [
     component: () => import('../views/Cart.vue'),
     meta: {
       layout: 'main',
-      auth: false
-    }
-  }
+      auth: false,
+    },
+  },
 ]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
   linkActiveClass: 'active',
-  linkExactActiveClass: 'active'
+  linkExactActiveClass: 'active',
+})
+
+router.beforeEach((to, from, next) => {
+  const requireAuth = to.meta.auth
+  const isAuthenticated = store.getters['auth/isAuthenticated']
+
+  if (requireAuth && isAuthenticated) {
+    next()
+  } else if (requireAuth && !isAuthenticated) {
+    next('/auth?message=auth')
+  } else {
+    next()
+  }
 })
 
 export default router

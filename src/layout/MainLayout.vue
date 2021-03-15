@@ -2,22 +2,22 @@
   <the-navbar></the-navbar>
 
   <div class="container with-nav">
+    <app-message />
     <router-view />
   </div>
 </template>
 
 <script>
-import TheNavbar from "@/components/TheNavbar";
-
+import TheNavbar from '@/components/TheNavbar'
+import AppMessage from '@/components/ui/AppMessage'
 
 export default {
-  name: "MainLayout",
+  name: 'MainLayout',
   components: {
-    TheNavbar
-  }
+    TheNavbar,
+    AppMessage,
+  },
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

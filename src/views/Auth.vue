@@ -14,21 +14,37 @@
       <small v-if="pError">{{ pError }}</small>
     </div>
 
-    <button type="submit" class="btn primary" :disabled="isSubmitting || isTooManyAttempts">Войти</button>
+    <button
+      type="submit"
+      class="btn primary"
+      :disabled="isSubmitting || isTooManyAttempts"
+    >
+      Войти
+    </button>
   </form>
 </template>
 
 <script>
-import { useLoginForm } from "@/use/login-form";
+import { useLoginForm } from '@/use/login-form'
 import { useStore } from 'vuex'
+import { useRoute } from 'vue-router'
+import { error } from '@/utils/error'
 
 export default {
-  setup () {
+  setup() {
     const store = useStore()
+    const route = useRoute()
+
+    if (route.query.message) {
+      store.dispatch('setMessage', {
+        value: error(route.query.message),
+        type: 'danger',
+      })
+    }
 
     return {
-      ...useLoginForm()
+      ...useLoginForm(),
     }
-  }
+  },
 }
 </script>
