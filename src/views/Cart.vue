@@ -16,16 +16,16 @@
         <tr v-for="product in products" :key="product.id">
           <td>{{ product.title }}</td>
           <td>
-            <button class="btn primary">+</button>
-            42 шт.
-            <button class="btn danger">-</button>
+            <button class="btn primary" @click="qty++">+</button>
+            <input type="text" v-model="qty" />
+            <button class="btn danger" @click="qty--">-</button>
           </td>
           <td>{{ product.price }} руб.</td>
         </tr>
         </tbody>
       </table>
       <hr>
-      <p class="text-right"><strong>Всего: 14 200 руб.</strong></p>
+      <p class="text-right"><strong>Всего: {{ totalSumm }} руб.</strong></p>
       <p class="text-right">
         <button class="btn">Оплатить</button>
       </p>
@@ -47,18 +47,23 @@ const CART_MODEL = {
 export default {
   setup() {
     const store = useStore()
-    const products = computed(() => store.getters['cart/products'])
     const loader = ref(true)
+    const qty = ref(1)
+    const products = computed(() => store.getters['cart/products'])
+    const totalSumm = computed(() => store.getters['cart/total'])
 
     onMounted(async () => {
-      await store.dispatch('cart/loadProducts')
+      await store.dispatch('cart/load')
+      await store.dispatch('cart/total')
       loader.value = false
     })
 
     return {
       products,
       AppLoader,
-      loader
+      loader,
+      totalSumm,
+      qty
     }
   }
 }
