@@ -24,8 +24,6 @@ export default {
       message.value ? mapTitle[message.value.type] : null
     )
 
-    console.log(message.value)
-
     return {
       message,
       title,
