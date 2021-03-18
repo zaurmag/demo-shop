@@ -4,26 +4,7 @@
     <h1>Корзина</h1>
 
     <div v-if="products">
-      <table class="table">
-        <thead>
-        <tr>
-          <th>Наименование</th>
-          <th>Количество</th>
-          <th>Цена (шт)</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr v-for="product in products" :key="product.id">
-          <td>{{ product.title }}</td>
-          <td>
-            <button class="btn primary" @click="qty++">+</button>
-            <input type="text" v-model="qty" />
-            <button class="btn danger" @click="qty--">-</button>
-          </td>
-          <td>{{ product.price }} руб.</td>
-        </tr>
-        </tbody>
-      </table>
+      <CartTable :products="products" :cartModel="cartModel" />
       <hr>
       <p class="text-right"><strong>Всего: {{ totalSumm }} руб.</strong></p>
       <p class="text-right">
@@ -35,24 +16,21 @@
 </template>
 
 <script>
-import { ref, onMounted, computed } from 'vue'
+import {ref, onMounted, computed, reactive} from 'vue'
 import { useStore } from 'vuex'
 import AppLoader from '@/components/ui/AppLoader'
-
-const CART_MODEL = {
-  '2': 3,
-  '5': 1
-}
+import CartTable from '@/components/cart/CartTable'
 
 export default {
   setup() {
     const store = useStore()
-    const loader = ref(true)
-    const qty = ref(1)
+    const loader = ref(false)
     const products = computed(() => store.getters['cart/products'])
     const totalSumm = computed(() => store.getters['cart/total'])
+    const cartModel = computed(() => store.getters['cart/cartProductsModel'])
 
     onMounted(async () => {
+      loader.value = true
       await store.dispatch('cart/load')
       await store.dispatch('cart/total')
       loader.value = false
@@ -63,12 +41,9 @@ export default {
       AppLoader,
       loader,
       totalSumm,
-      qty
+      CartTable,
+      cartModel
     }
   }
 }
 </script>
-
-<style scoped>
-
-</style>
