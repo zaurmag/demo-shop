@@ -38,7 +38,7 @@ export default {
 
     const qtyPlus = id => {
       store.commit('cart/changeCount', { id, count: cartModel[id]+1 })
-      store.dispatch('cart/countSumm')
+      store.dispatch('cart/update')
     }
 
     const qtyMinus = id => {
@@ -46,12 +46,12 @@ export default {
         return true
       }
       store.commit('cart/changeCount', { id, count: cartModel[id]-1 })
-      store.dispatch('cart/countSumm')
+      store.dispatch('cart/update')
     }
 
     const qtyChange = (id) => {
       store.commit('cart/changeCount', { id, count: +cartModel[id] })
-      store.dispatch('cart/countSumm')
+      store.dispatch('cart/update')
     }
 
     return {

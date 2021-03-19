@@ -17,36 +17,35 @@ export default {
     setProducts (state, products) {
       state.products = products
     },
-    total (state, summ) {
+    total (state) {
+      const summ = state.products.reduce((total, amount) => total + amount.countSumm, 0)
       state.total = summ
     },
     changeCount (state, {id, count}) {
       state.cartModel[id] = count
+    },
+    countSumm (state, context) {
+      console.log(context)
+      state.products.map(product => product.countSumm = product.price * state.cartModel[product.id])
     }
   },
   actions: {
-    async load ({ dispatch, commit, state } ) {
+    async load ({ commit, state } ) {
       try {
         const productsID = Object.keys(state.cartModel).map((id) => {
           return `id=${id}`
         }).join('&')
         const { data } = await axios.get(`http://localhost:3000/products?${productsID}`)
         await commit('setProducts', data)
-        await dispatch('countSumm')
-        await dispatch('total')
+        await commit('countSumm')
+        await commit('total')
       } catch(e) {
         throw e
       }
     },
-    total ({ commit, getters }) {
-      const data = getters['products']
-      const summ = data.reduce((total, amount) => total + amount.countSumm, 0)
-      commit('total', summ)
-    },
-    countSumm ({ getters, dispatch }) {
-      const data = getters.products
-      data.map(product => product.countSumm = product.price * getters.cartProductsModel[product.id])
-      dispatch('total')
+    update ({ commit }) {
+      commit('total')
+      commit('countSumm')
     }
   },
   getters: {
