@@ -16,6 +16,7 @@ export default {
     async load ({ commit }) {
       try {
         const { data } = await axios.get('/products')
+        data.sort((a, b) => b.count - a.count)
         commit('setProducts', data)
       } catch (e) {
         throw e

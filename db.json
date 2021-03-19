@@ -23,7 +23,7 @@
     { "id": "21", "count": 11, "title": "Мята", "category": "greens", "price":  99, "img": "https://images.grocery.yandex.net/2998515/dc4c4582962e48589147b830c30cebe8/300x300.png" },
     { "id": "22", "count": 15, "title": "Кинза", "category": "greens", "price":  55, "img": "https://images.grocery.yandex.net/2888787/0fd625d240034c8282faff2b4ea677e3/300x300.png" },
     { "id": "23", "count": 10, "title": "Клубника", "category": "berries", "price":  299, "img": "https://images.grocery.yandex.net/2805921/af2033d4ef3b4645abd19cd21e408695/300x300.png" },
-    { "id": "24", "count": 10, "title": "Голубика", "category": "berries", "price":  249, "img": "https://images.grocery.yandex.net/2756334/569d8814c1e548b0b4945e7bc4cd912a/300x300.png" },
+    { "id": "24", "count": 0, "title": "Голубика", "category": "berries", "price":  249, "img": "https://images.grocery.yandex.net/2756334/569d8814c1e548b0b4945e7bc4cd912a/300x300.png" },
     { "id": "25", "count": 15, "title": "Виноград", "category": "berries", "price":  139, "img": "https://images.grocery.yandex.net/2783132/4e13bf22837b45b59fd4b3e611d5fedf/300x300.png" }
   ],
   "categories": [

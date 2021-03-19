@@ -11,6 +11,7 @@
       <!--              <strong>123</strong>-->
       <!--              <button class="btn primary">+</button>-->
       <!--            </div>-->
+      <small class="small mt-20" :class="{'not-avilable' : !product.count}">{{ product.count ? 'В наличии: ' + product.count + ' шт.' : 'Нет в наличии' }}</small>
     </div>
   </div>
 </template>

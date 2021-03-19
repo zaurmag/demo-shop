@@ -557,12 +557,14 @@ h3 {
 
 .product-card {
     width: 215px;
-    height: 200px;
+    /*height: 200px;*/
     border: 1px solid #ccc;
     margin-right: 1rem;
     margin-bottom: 1rem;
     transition: .22s box-shadow;
     cursor: pointer;
+    padding-top: 10px;
+    padding-bottom: 15px;
 }
 
 .product-card:hover {
@@ -615,4 +617,14 @@ h3 {
     flex-wrap: wrap;
     width: 750px;
     padding: 1rem;
+}
+
+small.small {
+    display: block;
+}
+.mt-20 {
+    margin-top: 20px;
+}
+.not-avilable {
+    color: #e53935;
 }
