@@ -22,11 +22,6 @@ export default {
     },
     changeCount (state, {id, count}) {
       state.cartModel[id] = count
-      console.log(state.cartModel[id])
-    },
-    changePrice (state, { price, id }) {
-      const product = state.products.filter(p => p.id === id)
-      product.price = price
     }
   },
   actions: {
@@ -43,8 +38,13 @@ export default {
     },
     total ({ commit, getters }) {
       const data = getters['products']
-      const summ = data.reduce((total, amount) => total + amount.price, 0)
+      const summ = data.reduce((total, amount) => total + amount.countSumm, 0)
       commit('total', summ)
+    },
+    countSumm ({ getters, dispatch }) {
+      const data = getters.products
+      const countSumm = data.map(product => product.countSumm = product.price * getters.cartProductsModel[product.id])
+      dispatch('total')
     }
   },
   getters: {

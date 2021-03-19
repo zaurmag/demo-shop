@@ -5,6 +5,7 @@
       <th>Наименование</th>
       <th>Количество</th>
       <th>Цена (шт)</th>
+      <th>Сумма</th>
     </tr>
     </thead>
     <tbody>
@@ -18,6 +19,7 @@
         </div>
       </td>
       <td>{{ product.price }} руб.</td>
+      <td>{{ product.countSumm }}</td>
     </tr>
     </tbody>
   </table>
@@ -36,17 +38,20 @@ export default {
 
     const qtyPlus = id => {
       store.commit('cart/changeCount', { id, count: cartModel[id]+1 })
+      store.dispatch('cart/countSumm')
     }
 
     const qtyMinus = id => {
-      if (cartModel[id] <= 0) {
+      if (cartModel[id] <= 1) {
         return true
       }
       store.commit('cart/changeCount', { id, count: cartModel[id]-1 })
+      store.dispatch('cart/countSumm')
     }
 
     const qtyChange = (id) => {
       store.commit('cart/changeCount', { id, count: +cartModel[id] })
+      store.dispatch('cart/countSumm')
     }
 
     return {

@@ -32,6 +32,7 @@ export default {
     onMounted(async () => {
       loader.value = true
       await store.dispatch('cart/load')
+      await store.dispatch('cart/countSumm')
       await store.dispatch('cart/total')
       loader.value = false
     })
