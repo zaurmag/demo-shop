@@ -6,7 +6,7 @@
     <div v-if="products">
       <CartTable :products="products" :cartModel="cartModel" />
       <hr>
-      <p class="text-right"><strong>Всего: {{ totalSumm }} руб.</strong></p>
+      <p class="text-right"><strong>Всего: {{ $currency(totalSumm, 'RUB') }} руб.</strong></p>
       <p class="text-right">
         <button class="btn">Оплатить</button>
       </p>
@@ -32,8 +32,6 @@ export default {
     onMounted(async () => {
       loader.value = true
       await store.dispatch('cart/load')
-      await store.dispatch('cart/countSumm')
-      await store.dispatch('cart/total')
       loader.value = false
     })
 

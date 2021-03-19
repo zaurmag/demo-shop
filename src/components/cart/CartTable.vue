@@ -18,8 +18,8 @@
           <button class="btn danger" @click="qtyMinus(product.id)">-</button>
         </div>
       </td>
-      <td>{{ product.price }} руб.</td>
-      <td>{{ product.countSumm }}</td>
+      <td>{{ $currency(product.price, 'RUB') }}</td>
+      <td>{{ $currency(product.countSumm, 'RUB') }}</td>
     </tr>
     </tbody>
   </table>
