@@ -9,12 +9,7 @@
           <span class="form-control-clear">&times;</span>
         </div>
 
-        <ul class="list">
-          <li class="list-item">Все</li>
-          <li class="list-item">
-            Название категории
-          </li>
-        </ul>
+        <CategoriesModule />
       </div>
       <div class="products-table">
 <!--        <pre>{{ products }}</pre>-->
@@ -30,6 +25,7 @@ import ProductCard from '@/components/ProductCard'
 import AppLoader from '@/components/ui/AppLoader'
 import { useStore } from 'vuex'
 import { computed, onMounted, ref } from 'vue'
+import CategoriesModule from '@/components/CategoriesModule'
 
 export default {
   name: 'Home',
@@ -42,7 +38,6 @@ export default {
       loader.value = true
       await store.dispatch('products/load')
       loader.value = false
-      console.log(products.value)
     })
 
     return {
@@ -53,7 +48,8 @@ export default {
   components: {
     AppPage,
     ProductCard,
-    AppLoader
+    AppLoader,
+    CategoriesModule
   }
 }
 </script>
