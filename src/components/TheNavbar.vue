@@ -7,7 +7,7 @@
         <router-link to="/">Магазин</router-link>
       </li>
       <li>
-        <router-link to="/cart">Корзина [{{ products }}]</router-link>
+        <router-link to="/cart">Корзина [{{ cartCount }}]</router-link>
       </li>
       <li>
         <a href="#" @click.prevent="logout">Выход</a>
@@ -34,7 +34,7 @@ export default {
         store.commit('auth/logout')
         router.push('/auth')
       },
-      products: computed(() => store.getters['cart/products'].length)
+      cartCount: computed(() => store.getters['cart/totalCount'])
     }
   },
 }
