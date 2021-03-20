@@ -1,10 +1,11 @@
 <template>
   <ul class="list">
-    <li class="list-item">Все</li>
+    <li class="list-item" @click="catFilterAllHandler">Все</li>
     <li
       class="list-item"
       v-for="cat in categories"
       :key="cat.id"
+      @click="catFilterHandler(cat.type)"
     >
       {{ cat.title }}
     </li>
@@ -20,6 +21,31 @@ export default {
   setup () {
     const store = useStore()
     const categories = computed(() => store.getters['categories/categories'])
+    const products = computed(async () => await store.dispatch('products/load'))
+
+    const catFilterAllHandler = () => {
+      products.value.then(
+        result => {
+          store.commit('products/setProducts', result)
+        },
+        error => {
+          throw error
+        }
+      )
+    }
+
+    const catFilterHandler = type => {
+      products.value.then(
+        result => {
+          const productsFilter = result.filter(p => p.category === type)
+          store.commit('products/setProducts', productsFilter)
+        },
+        error => {
+          throw error
+        }
+      )
+
+    }
 
     onMounted(async () => {
       try {
@@ -28,7 +54,9 @@ export default {
     })
 
     return {
-      categories
+      categories,
+      catFilterHandler,
+      catFilterAllHandler
     }
   }
 }

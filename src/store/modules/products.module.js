@@ -18,6 +18,7 @@ export default {
         const { data } = await axios.get('/products')
         data.sort((a, b) => b.count - a.count)
         commit('setProducts', data)
+        return data
       } catch (e) {
         throw e
       }
