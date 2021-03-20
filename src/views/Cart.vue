@@ -29,12 +29,6 @@ export default {
     const totalSumm = computed(() => store.getters['cart/total'])
     const cartModel = computed(() => store.getters['cart/cartProductsModel'])
 
-    onMounted(async () => {
-      loader.value = true
-      await store.dispatch('cart/load')
-      loader.value = false
-    })
-
     return {
       products,
       AppLoader,
