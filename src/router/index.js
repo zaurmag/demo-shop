@@ -38,6 +38,16 @@ const routes = [
       auth: false,
     },
   },
+  {
+    path: '/search',
+    name: 'Search',
+    component: () => import('../views/Search.vue'),
+    meta: {
+      layout: 'main',
+      auth: false,
+    },
+    props: route => ({ query: route.query.category }),
+  },
 ]
 
 const router = createRouter({

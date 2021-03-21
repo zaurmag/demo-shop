@@ -12,6 +12,7 @@
         <CategoriesModule />
       </div>
       <div class="products-table">
+        <!--        <pre>{{ products }}</pre>-->
         <ProductCard :products="products" />
       </div>
     </div>
@@ -23,15 +24,18 @@ import AppPage from '@/components/ui/AppPage'
 import ProductCard from '@/components/ProductCard'
 import AppLoader from '@/components/ui/AppLoader'
 import { useStore } from 'vuex'
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import CategoriesModule from '@/components/CategoriesModule'
+import { useRoute } from 'vue-router'
 
 export default {
   name: 'Home',
-  setup() {
+  props: ['category'],
+  setup(props) {
     const loader = ref(false)
     const store = useStore()
     const products = computed(() => store.getters['products/products'])
+    const route = useRoute()
 
     onMounted(async () => {
       loader.value = true

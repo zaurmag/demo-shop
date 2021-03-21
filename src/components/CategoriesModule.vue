@@ -14,14 +14,16 @@
 
 <script>
 import { useStore } from 'vuex'
-import {computed, onMounted} from 'vue'
+import { computed, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 
 export default {
-  name: "CategoriesModule",
-  setup () {
+  name: 'CategoriesModule',
+  setup() {
     const store = useStore()
     const categories = computed(() => store.getters['categories/categories'])
     const products = computed(async () => await store.dispatch('products/load'))
+    const router = useRouter()
 
     const catFilterAllHandler = () => {
       products.value.then(
@@ -35,6 +37,7 @@ export default {
     }
 
     const catFilterHandler = type => {
+      router.push('/search?category=' + type)
       products.value.then(
         result => {
           const productsFilter = result.filter(p => p.category === type)
@@ -44,7 +47,6 @@ export default {
           throw error
         }
       )
-
     }
 
     onMounted(async () => {
@@ -56,12 +58,10 @@ export default {
     return {
       categories,
       catFilterHandler,
-      catFilterAllHandler
+      catFilterAllHandler,
     }
-  }
+  },
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

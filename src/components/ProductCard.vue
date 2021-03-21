@@ -5,13 +5,17 @@
     </div>
     <h4 class="product-title">{{ product.title }}</h4>
     <div class="text-center">
-      <button class="btn" v-if="!controls" @click="controls = true">{{ product.price }}</button>
+      <button class="btn" v-if="!controls" @click="controls = true">
+        {{ $currency(product.price, 'RUB') }}
+      </button>
       <div v-else class="product-controls">
         <button class="btn danger">-</button>
         <strong>123</strong>
         <button class="btn primary">+</button>
       </div>
-      <small class="small mt-20" :class="{'not-avilable' : !product.count}">{{ product.count ? 'В наличии: ' + product.count + ' шт.' : 'Нет в наличии' }}</small>
+      <small class="small mt-20" :class="{ 'not-avilable': !product.count }">{{
+        product.count ? 'В наличии: ' + product.count + ' шт.' : 'Нет в наличии'
+      }}</small>
     </div>
   </div>
 </template>
@@ -21,18 +25,16 @@ import { computed, ref } from 'vue'
 
 export default {
   props: ['products'],
-  name: "ProductCard",
-  setup (props) {
+  name: 'ProductCard',
+  setup(props) {
     const controls = ref(false)
 
     return {
       controls,
-      products: computed(() => props.products)
+      products: computed(() => props.products),
     }
-  }
+  },
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
