@@ -3,14 +3,8 @@
 
   <app-page title="Магазин">
     <div class="card">
-      <div class="products-filter">
-        <div class="form-control">
-          <input type="text" placeholder="Найти товар..." />
-          <span class="form-control-clear">&times;</span>
-        </div>
+      <ProductsFilter />
 
-        <CategoriesModule />
-      </div>
       <div class="products-table">
         <ProductCard :products="products" />
       </div>
@@ -24,19 +18,24 @@ import ProductCard from '@/components/ProductCard'
 import AppLoader from '@/components/ui/AppLoader'
 import { useStore } from 'vuex'
 import { computed, onMounted, ref } from 'vue'
-import CategoriesModule from '@/components/CategoriesModule'
+import ProductsFilter from '@/components/ProductsFilter'
+import { useRoute } from 'vue-router'
 
 export default {
   name: 'Home',
   setup() {
     const loader = ref(false)
     const store = useStore()
+    const route = useRoute()
     const products = computed(() => store.getters['products/products'])
 
     onMounted(async () => {
-      loader.value = true
-      await store.dispatch('products/load')
-      loader.value = false
+      console.log(route.query.category)
+      if (!route.query.category && !route.query.title) {
+        loader.value = true
+        await store.dispatch('products/load')
+        loader.value = false
+      }
     })
 
     return {
@@ -48,7 +47,7 @@ export default {
     AppPage,
     ProductCard,
     AppLoader,
-    CategoriesModule,
+    ProductsFilter,
   },
 }
 </script>
