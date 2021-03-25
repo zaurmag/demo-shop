@@ -16,15 +16,15 @@ export default {
     async load ({ commit }) {
       try {
         const { data } = await axios.get('/products')
-        data.sort((a, b) => b.count - a.count)
         commit('setProducts', data)
-        return data
       } catch (e) {
         throw e
       }
     }
   },
   getters: {
-    products: state => state.products
+    products: state => {
+      return state.products.sort((a, b) => b.count - a.count)
+    }
   }
 }
