@@ -8,7 +8,7 @@ const routes = [
     component: () => import('../views/Shop.vue'),
     meta: {
       layout: 'main',
-      auth: true,
+      auth: false,
     },
   },
   {
@@ -37,6 +37,40 @@ const routes = [
       layout: 'main',
       auth: false,
     },
+  },
+  {
+    path: '/admin',
+    name: 'Admin',
+    redirect: '/admin/products',
+    component: () => import('../views/admin/Admin'),
+    meta: {
+      layout: 'main',
+      auth: true
+    },
+    children: [
+      {
+        path: 'products',
+        name: 'AdminProducts',
+        component: () => import('../views/admin/Products')
+      },
+      {
+        path: 'product:id',
+        name: 'AdminProduct',
+        props: true,
+        component: () => import('../views/admin/Product')
+      },
+      {
+        path: 'categories',
+        name: 'AdminCategories',
+        component: () => import('../views/admin/Categories')
+      },
+      {
+        path: 'category:id',
+        name: 'AdminCategory',
+        props: true,
+        component: () => import('../views/admin/Category')
+      }
+    ]
   }
 ]
 

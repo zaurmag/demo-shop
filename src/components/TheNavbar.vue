@@ -9,12 +9,15 @@
       <li>
         <router-link to="/cart">Корзина [{{ cartCount }}]</router-link>
       </li>
-      <li>
+      <li v-if="isAuth">
+        <router-link to="/admin">Админка</router-link>
+      </li>
+      <li v-if="isAuth">
         <a href="#" @click.prevent="logout">Выход</a>
       </li>
-      <!--      <li>-->
-      <!--        <router-link to="/auth">Вход</router-link>-->
-      <!--      </li>-->
+      <li v-else>
+        <router-link to="/auth">Вход</router-link>
+      </li>
     </ul>
   </nav>
 </template>
@@ -34,7 +37,8 @@ export default {
         store.commit('auth/logout')
         router.push('/auth')
       },
-      cartCount: computed(() => store.getters['cart/totalCount'])
+      cartCount: computed(() => store.getters['cart/totalCount']),
+      isAuth: computed(() => store.getters['auth/isAuthenticated'])
     }
   },
 }
