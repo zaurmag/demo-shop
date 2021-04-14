@@ -1,5 +1,4 @@
 <template>
-
     <h1>Категории</h1>
     <table class="table">
       <thead>
@@ -24,7 +23,6 @@
       </tr>
       </tbody>
     </table>
-
 </template>
 
 <script>

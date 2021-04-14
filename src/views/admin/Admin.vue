@@ -1,7 +1,5 @@
 <template>
-  <div class="card">
-    <router-view />
-  </div>
+  <router-view />
 </template>
 
 <script>

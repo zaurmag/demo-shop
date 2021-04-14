@@ -13,6 +13,9 @@
         <router-link to="/admin">Админка</router-link>
       </li>
       <li v-if="isAuth">
+        <router-link to="/admin/categories">Категории</router-link>
+      </li>
+      <li v-if="isAuth">
         <a href="#" @click.prevent="logout">Выход</a>
       </li>
       <li v-else>
