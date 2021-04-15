@@ -2,7 +2,10 @@
   <AppLoader v-if="loader" />
 
   <app-page title="Админка - Товары">
-    <AdminProducts :products="products" />
+    <AdminProducts
+      :products="products"
+      @open="open"
+    />
   </app-page>
 </template>
 
@@ -12,12 +15,14 @@ import AdminProducts from '@/components/admin/AdminProducts'
 import { useStore } from 'vuex'
 import { computed, onMounted, ref } from "vue";
 import AppLoader from '@/components/ui/AppLoader'
+import { useRouter } from 'vue-router'
 
 export default {
   name: 'Products',
   setup () {
     let loader = ref(false)
     const store = useStore()
+    const router = useRouter()
     const products = computed(() => store.getters['products/products'])
 
     onMounted(async () => {
@@ -26,9 +31,14 @@ export default {
       loader.value = false
     })
 
+    const open = id => {
+      router.push(`/admin/product/${id}`)
+    }
+
     return {
       products,
-      loader
+      loader,
+      open
     }
   },
   components: {

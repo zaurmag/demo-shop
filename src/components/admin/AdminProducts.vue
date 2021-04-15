@@ -20,7 +20,7 @@
         <td>{{ $currency(product.price, 'RUB') }}</td>
         <td>{{ product.count }}</td>
         <td>
-          <button class="btn">Открыть</button>
+          <button class="btn" @click="$emit('open', product.id)">Открыть</button>
         </td>
       </tr>
     </tbody>
@@ -30,6 +30,7 @@
 <script>
 export default {
   props: ['products'],
+  emits: ['open'],
   name: "AdminProducts"
 }
 </script>

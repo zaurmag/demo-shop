@@ -20,11 +20,31 @@ export default {
       } catch (e) {
         throw e
       }
+    },
+    async loadOne (_, id) {
+      try {
+        const { data } = await axios.get(`/products/${+id}`)
+        return data
+      } catch (e) {
+        throw e
+      }
+    },
+    async update ({ dispatch }, product) {
+      try {
+        await axios.put(`/products/${product.id}`, product)
+        dispatch('setMessage', {
+          value: 'Товар успешно обновлен',
+          type: 'primary'
+        }, {root: true})
+      } catch (e) {
+        dispatch('setMessage', {
+          value: e.message,
+          type: 'danger'
+        }, {root: true})
+      }
     }
   },
   getters: {
-    products: state => {
-      return state.products.sort((a, b) => b.count - a.count)
-    }
+    products: state => state.products.sort((a, b) => b.count - a.count)
   }
 }

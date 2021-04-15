@@ -1,5 +1,5 @@
 <template>
-    <h1>Категории</h1>
+  <AppPage back title="Категории">
     <table class="table">
       <thead>
       <tr>
@@ -23,11 +23,17 @@
       </tr>
       </tbody>
     </table>
+  </AppPage>
 </template>
 
 <script>
+import AppPage from '@/components/ui/AppPage'
+
 export default {
-  name: "Categories"
+  name: "Categories",
+  components: {
+    AppPage
+  }
 }
 </script>
 
