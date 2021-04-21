@@ -2,15 +2,25 @@
   <AppLoader v-if="loader" />
 
   <app-page title="Админка - Товары">
+    <template #header>
+      <button class="btn primary" @click="modal = true">Создать</button>
+    </template>
     <AdminProducts
       :products="products"
       @open="open"
     />
   </app-page>
+
+  <teleport to="body">
+    <app-modal v-if="modal" title="Добавить товар" @close="modal = false">
+      Проверка
+    </app-modal>
+  </teleport>
 </template>
 
 <script>
 import AppPage from '@/components/ui/AppPage'
+import AppModal from '@/components/ui/AppModal'
 import AdminProducts from '@/components/admin/AdminProducts'
 import { useStore } from 'vuex'
 import { computed, onMounted, ref } from "vue";
@@ -24,6 +34,7 @@ export default {
     const store = useStore()
     const router = useRouter()
     const products = computed(() => store.getters['products/products'])
+    const modal = ref(false)
 
     onMounted(async () => {
       loader.value = true
@@ -38,13 +49,15 @@ export default {
     return {
       products,
       loader,
-      open
+      open,
+      modal
     }
   },
   components: {
     AppLoader,
     AdminProducts,
-    AppPage
+    AppPage,
+    AppModal
   }
 }
 </script>

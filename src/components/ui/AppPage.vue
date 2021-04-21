@@ -4,8 +4,8 @@
   </div>
 
   <div class="card">
-    <h1 class="card-title">{{ title }}</h1>
-    <slot />
+    <h1 class="card-title">{{ title }}<slot name="header"></slot></h1>
+    <slot name="default"></slot>
   </div>
 </template>
 
