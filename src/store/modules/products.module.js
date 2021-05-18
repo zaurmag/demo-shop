@@ -42,7 +42,36 @@ export default {
           type: 'danger'
         }, {root: true})
       }
-    }
+    },
+    async add ({ dispatch }, product) {
+      try {
+        await axios.post(`/products/`, product)
+        dispatch('setMessage', {
+          value: 'Товар успешно добавлен',
+          type: 'primary'
+        }, {root: true})
+      } catch (e) {
+        dispatch('setMessage', {
+          value: e.message,
+          type: 'danger'
+        }, {root: true})
+      }
+
+    },
+    async delete ({ dispatch }, id) {
+      try {
+        await axios.delete(`/products/${id}`)
+        dispatch('setMessage', {
+          value: 'Товар успешно удален',
+          type: 'primary'
+        }, {root: true})
+      } catch (e) {
+        dispatch('setMessage', {
+          value: e.message,
+          type: 'danger'
+        }, {root: true})
+      }
+    },
   },
   getters: {
     products: state => state.products.sort((a, b) => b.count - a.count)

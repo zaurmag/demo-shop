@@ -9,14 +9,6 @@
       "img": "https://images.grocery.yandex.net/2783132/a14b43cfbbac4898b5a89fd1e52c0029/300x300.png"
     },
     {
-      "title": "Груша",
-      "img": "https://images.grocery.yandex.net/2805921/631c3a283a994a80820c216ec51f139d/300x300.png",
-      "price": 159,
-      "count": "16",
-      "category": "fruit",
-      "id": "2"
-    },
-    {
       "id": "3",
       "count": 14,
       "title": "Апельсин",
@@ -71,9 +63,6 @@
       "category": "meat",
       "price": 519,
       "img": "https://images.grocery.yandex.net/2791769/01fa0c414a1d406da8db8f9a103f752d/300x300.png"
-    },
-    {
-      "id": "10"
     },
     {
       "id": "11",

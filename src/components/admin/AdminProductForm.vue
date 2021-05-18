@@ -36,7 +36,8 @@
     </div>
 
     <div v-if="$slots.add">
-      <button class="btn primary">Добавить</button>
+      <button class="btn primary" type="submit">Добавить</button>
+      <button class="btn" type="button" @click="$emit('close')">Отменить</button>
     </div>
 
     <div v-if="$slots.edit">
@@ -46,45 +47,77 @@
       </div>
 
       <div v-else>
-        <button class="btn danger">Удалить</button>
-        <button class="btn" @click="$emit('close')">Закрыть</button>
+        <button class="btn danger" type="button" @click="remove">Удалить</button>
+        <button class="btn" type="button" @click="$emit('close')">Закрыть</button>
       </div>
     </div>
   </form>
+
+  <teleport to="body">
+    <app-modal v-if="modal" title="Вы уверены?" @close="modal = false">
+      <button class="btn primary" type="button" @click="isDelete = true">Да</button>
+      <button class="btn danger" type="button" @click="modal = false">Нет</button>
+    </app-modal>
+  </teleport>
 </template>
 
 <script>
 import { useAdminProductForm } from '@/use/admin-product'
-import {computed, ref} from 'vue'
+import AppModal from '@/components/ui/AppModal'
+import {computed, ref, watch} from 'vue'
 import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 
 export default {
-  emits: ['close'],
+  emits: ['close', 'delete'],
   props: ['id', 'initialValues'],
   name: "AdminProductForm",
-  setup(props) {
+  setup(props, { emit }) {
     const store = useStore()
     const id = props.id
+    const router = useRouter()
+    const modal = ref(false)
+    const isDelete = ref(false)
     const categories = computed(() => store.getters['categories/categories'])
 
     const submit = async values => {
       try {
+        const data = {
+          ...values,
+          id: id ? id : Date.now().toString()
+        }
+
         if (id) {
-          const data = {
-            ...values,
-            id
-          }
           await store.dispatch('products/update', data)
         } else {
-
+          await store.dispatch('products/add', data)
+          await store.dispatch('products/load')
+          emit('close')
         }
       } catch (e) {}
     }
 
+    const remove = () => {
+      modal.value = true
+      watch(isDelete, val => {
+        if (val) {
+          store.dispatch('products/delete', id)
+          router.push('/admin')
+          modal.value = false
+        }
+      })
+    }
+
     return {
       ...useAdminProductForm(submit, props.initialValues),
-      categories
+      categories,
+      remove,
+      modal,
+      isDelete
     }
+  },
+  components: {
+    AppModal
   }
 }
 </script>

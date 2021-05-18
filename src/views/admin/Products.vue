@@ -13,7 +13,7 @@
 
   <teleport to="body">
     <app-modal v-if="modal" title="Добавить товар" @close="modal = false">
-      <AdminProductForm>
+      <AdminProductForm @close="close">
         <template #add />
       </AdminProductForm>
     </app-modal>
@@ -42,6 +42,7 @@ export default {
     onMounted(async () => {
       loader.value = true
       await store.dispatch('products/load')
+      await store.dispatch('categories/load')
       loader.value = false
     })
 
@@ -53,6 +54,7 @@ export default {
       products,
       loader,
       open,
+      close: () => modal.value = false,
       modal
     }
   },
