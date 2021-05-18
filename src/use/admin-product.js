@@ -1,11 +1,8 @@
 import { useField, useForm } from 'vee-validate'
 import * as yup from 'yup'
 import { computed } from 'vue'
-import { useRouter } from 'vue-router'
-import { useStore } from 'vuex'
 
-export function useAdminProductForm(id, initialValues) {
-  const store = useStore()
+export function useAdminProductForm(submit, initialValues) {
   const { handleSubmit, handleReset, values, meta } = useForm({initialValues})
 
   // Title
@@ -51,16 +48,7 @@ export function useAdminProductForm(id, initialValues) {
     return Object.keys(values).some(key => values[key] !== meta.value.initialValues[key])
   })
 
-  const onSubmit = handleSubmit(async values => {
-    try {
-      debugger
-      const data = {
-        ...values,
-        id
-      }
-      await store.dispatch('products/update', data)
-    } catch (e) {}
-  })
+  const onSubmit = handleSubmit(submit)
 
   return {
     title,

@@ -13,7 +13,9 @@
 
   <teleport to="body">
     <app-modal v-if="modal" title="Добавить товар" @close="modal = false">
-      Проверка
+      <AdminProductForm>
+        <template #add />
+      </AdminProductForm>
     </app-modal>
   </teleport>
 </template>
@@ -26,6 +28,7 @@ import { useStore } from 'vuex'
 import { computed, onMounted, ref } from "vue";
 import AppLoader from '@/components/ui/AppLoader'
 import { useRouter } from 'vue-router'
+import AdminProductForm from '@/components/admin/AdminProductForm'
 
 export default {
   name: 'Products',
@@ -57,7 +60,8 @@ export default {
     AppLoader,
     AdminProducts,
     AppPage,
-    AppModal
+    AppModal,
+    AdminProductForm
   }
 }
 </script>
