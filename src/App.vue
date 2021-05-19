@@ -6,8 +6,9 @@
 import {computed, onMounted} from 'vue'
 import { useStore } from 'vuex'
 import {useRoute} from 'vue-router'
-import MainLayout from "@/layout/MainLayout";
-import AuthLayout from "@/layout/AuthLayout";
+import MainLayout from '@/layout/MainLayout'
+import AdminLayout from '@/layout/AdminLayout'
+import AuthLayout from '@/layout/AuthLayout'
 
 export default {
   setup () {
@@ -24,7 +25,8 @@ export default {
   },
   components: {
     MainLayout,
-    AuthLayout
+    AuthLayout,
+    AdminLayout
   }
 }
 </script>

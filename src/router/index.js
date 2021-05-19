@@ -44,7 +44,7 @@ const routes = [
     redirect: '/admin/products',
     component: () => import('../views/admin/Admin'),
     meta: {
-      layout: 'main',
+      layout: 'admin',
       auth: true
     },
     children: [

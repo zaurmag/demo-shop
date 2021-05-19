@@ -1,6 +1,6 @@
 <template>
   <div class="breadcrumbs" v-if="back">
-    <router-link to="/" class="text-white">Вернуться к списку товаров</router-link>
+    <router-link to="/admin" class="text-white">Вернуться к списку товаров</router-link>
   </div>
 
   <div class="card">

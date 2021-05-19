@@ -1,32 +1,26 @@
 <template>
   <nav class="navbar">
-    <h3>Online Shop</h3>
+    <h3>Админка</h3>
 
     <ul class="navbar-menu">
-      <li>
-        <router-link to="/">Магазин</router-link>
-      </li>
-      <li>
-        <router-link to="/cart">Корзина [{{ cartCount }}]</router-link>
-      </li>
       <li v-if="isAuth">
-        <router-link to="/admin">Админка</router-link>
+        <router-link to="/admin/products">Товары</router-link>
       </li>
       <li v-if="isAuth">
         <router-link to="/admin/categories">Категории</router-link>
       </li>
-      <li v-if="isAuth">
+      <li class="logout" v-if="isAuth">
         <a href="#" @click.prevent="logout">Выход</a>
       </li>
-      <li v-if="!isAuth">
-        <router-link to="/auth">Вход</router-link>
+      <li class="go-shop">
+        <router-link to="/">В магазин</router-link>
       </li>
     </ul>
   </nav>
 </template>
 
 <script>
-import { onMounted, computed } from 'vue'
+import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 
@@ -40,11 +34,23 @@ export default {
         store.commit('auth/logout')
         router.push('/auth')
       },
-      cartCount: computed(() => store.getters['cart/totalCount']),
       isAuth: computed(() => store.getters['auth/isAuthenticated'])
     }
   },
 }
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+  .go-shop {
+    margin-left: 15px;
+
+    a {
+      color: #0bac6b;
+    }
+  }
+  .logout {
+    a {
+      color: #d22043;
+    }
+  }
+</style>

@@ -1,7 +1,7 @@
 <template>
   <AppLoader v-if="loader" />
 
-  <app-page title="Админка - Товары" v-else>
+  <app-page title="Товары" v-else>
     <template #header>
       <button class="btn primary" @click="modal = true">Создать</button>
     </template>
