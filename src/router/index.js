@@ -65,7 +65,7 @@ const routes = [
         component: () => import('../views/admin/Categories')
       },
       {
-        path: 'category:id',
+        path: 'category/:id',
         name: 'AdminCategory',
         props: true,
         component: () => import('../views/admin/Category')

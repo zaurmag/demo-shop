@@ -56,7 +56,6 @@ export default {
           type: 'danger'
         }, {root: true})
       }
-
     },
     async delete ({ dispatch }, id) {
       try {
