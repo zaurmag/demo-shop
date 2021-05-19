@@ -49,12 +49,12 @@
       "img": "https://images.grocery.yandex.net/2756334/33a66b51989449f9918122a775885fbc/300x300.png"
     },
     {
-      "id": "8",
-      "count": 12,
-      "title": "Баклажан",
-      "category": "vegetable",
+      "title": "Баклажан1",
+      "img": "https://images.grocery.yandex.net/2756334/cbb08819de08460a9131a86c627bed92/300x300.png",
       "price": 189,
-      "img": "https://images.grocery.yandex.net/2756334/cbb08819de08460a9131a86c627bed92/300x300.png"
+      "count": 12,
+      "category": "vegetable",
+      "id": "8"
     },
     {
       "id": "9",
