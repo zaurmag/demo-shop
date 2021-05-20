@@ -25,12 +25,12 @@
 import AppPage from '@/components/ui/AppPage'
 import AppModal from '@/components/ui/AppModal'
 import AdminProducts from '@/components/admin/AdminProducts'
-import { useStore } from 'vuex'
-import { computed, onMounted, ref, watch } from "vue";
 import AppLoader from '@/components/ui/AppLoader'
-import { useRouter, useRoute } from 'vue-router'
 import AdminProductForm from '@/components/admin/AdminProductForm'
-import AppPaginate from '@/components/AppPaginate'
+import AppPaginate from '@/components/ui/AppPaginate'
+import { useRouter, useRoute } from 'vue-router'
+import { useStore } from 'vuex'
+import { computed, onMounted, ref, watch } from 'vue'
 import chunk from 'lodash.chunk'
 
 export default {

@@ -52,18 +52,10 @@
       </div>
     </div>
   </form>
-
-  <teleport to="body">
-    <app-modal v-if="modal" title="Вы уверены?" @close="modal = false">
-      <button class="btn primary" type="button" @click="isDelete = true">Да</button>
-      <button class="btn danger" type="button" @click="modal = false">Нет</button>
-    </app-modal>
-  </teleport>
 </template>
 
 <script>
 import { useAdminProductForm } from '@/use/admin-product'
-import AppModal from '@/components/ui/AppModal'
 import {computed, ref, watch} from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
@@ -76,7 +68,6 @@ export default {
     const store = useStore()
     const id = props.id
     const router = useRouter()
-    const modal = ref(false)
     const isDelete = ref(false)
     const categories = computed(() => store.getters['categories/categories'])
 
@@ -108,16 +99,14 @@ export default {
       })
     }
 
+    console.log(props.initialValues)
+
     return {
       ...useAdminProductForm(submit, props.initialValues),
       categories,
       remove,
-      modal,
       isDelete
     }
-  },
-  components: {
-    AppModal
   }
 }
 </script>
