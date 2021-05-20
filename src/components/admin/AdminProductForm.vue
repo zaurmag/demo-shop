@@ -99,8 +99,6 @@ export default {
       })
     }
 
-    console.log(props.initialValues)
-
     return {
       ...useAdminProductForm(submit, props.initialValues),
       categories,

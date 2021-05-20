@@ -15,6 +15,7 @@
         <td>{{ category.type }}</td>
         <td>
           <button class="btn" @click="$emit('open', category.id)">Открыть</button>
+          <button class="btn danger" type="button" @click="$emit('remove', category.id)">x</button>
         </td>
       </tr>
     </tbody>
@@ -24,7 +25,7 @@
 <script>
 export default {
   props: ['categories'],
-  emits: ['open'],
+  emits: ['open', 'remove'],
   name: "AdminProducts"
 }
 </script>
