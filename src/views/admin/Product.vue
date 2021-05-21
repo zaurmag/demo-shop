@@ -8,7 +8,7 @@
     </AdminProductForm>
   </app-page>
   <h3 v-else class="text-center text-white">
-    Товара с ID = {{ $route.params.id }} нет.
+    Товара с ID = {{ id }} нет.
   </h3>
 
   <teleport to="body">
@@ -50,7 +50,7 @@ export default {
     })
 
     const hasChanges = computed(() => {
-      product.value.title !== initial.value.title ||
+      return product.value.title !== initial.value.title ||
       product.value.img !== initial.value.img ||
       product.value.price !== initial.value.price ||
       product.value.count !== initial.value.count

@@ -15,7 +15,6 @@ export function useConfirmGuard(changed) {
 
   onBeforeRouteLeave(to => {
     toLeave.value = to.path
-    console.log(changed.value)
 
     if (canLeave.value) {
       return true

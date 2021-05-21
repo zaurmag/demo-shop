@@ -13,11 +13,6 @@ import AuthLayout from '@/layout/AuthLayout'
 export default {
   setup () {
     const route = useRoute()
-    const store = useStore()
-
-    onMounted(() => {
-      store.dispatch('cart/load')
-    })
 
     return {
       layout: computed(() => route.meta.layout)

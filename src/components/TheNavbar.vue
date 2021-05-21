@@ -37,7 +37,7 @@ export default {
         store.commit('auth/logout')
         router.push('/auth')
       },
-      cartCount: computed(() => store.getters['cart/totalCount']),
+      cartCount: computed(() => store.getters['cart/count']),
       isAuth: computed(() => store.getters['auth/isAuthenticated'])
     }
   },

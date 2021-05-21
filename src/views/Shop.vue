@@ -6,7 +6,9 @@
       <ProductsFilter v-model="filter" :categories="categories" />
 
       <div class="products-table">
-        <ProductCard :products="products" />
+        <ProductCard
+          :products="products"
+        />
       </div>
     </div>
   </app-page>
@@ -19,13 +21,14 @@ import AppLoader from '@/components/ui/AppLoader'
 import { useStore } from 'vuex'
 import { computed, onMounted, ref, reactive } from 'vue'
 import ProductsFilter from '@/components/ProductsFilter'
-import { useRoute } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 
 export default {
   name: 'Home',
   setup() {
     const loader = ref(false)
     const store = useStore()
+    const router = useRouter()
     const route = useRoute()
     const categories = computed(() => store.getters['categories/categories'])
     const filter = ref({
@@ -61,7 +64,8 @@ export default {
       products,
       loader,
       categories,
-      filter
+      filter,
+      open: id => router.push(`/product/${id}`),
     }
   },
   components: {

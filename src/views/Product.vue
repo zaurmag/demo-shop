@@ -1,25 +1,49 @@
 <template>
-  <app-page back center title="Свекла">
-    <img src="https://images.grocery.yandex.net/2756334/33a66b51989449f9918122a775885fbc/300x300.png" />
-    <p>Категория: <strong>Название категории</strong></p>
-    <button class="btn">
-      123 руб
-    </button>
-    <div class="product-controls in-card">
-      <button class="btn danger">-</button>
-      <strong>12</strong>
-      <button class="btn primary">+</button>
-    </div>
+  <AppLoader v-if="loading" />
+
+  <app-page back center :title="product.title" v-else-if="product">
+    <img :src="product.img" />
+    <p>Категория: <strong>{{ product.category }}</strong></p>
+
+    <ProductActions :product="product" product-full />
   </app-page>
-  <h3 class="text-center text-white">
-    Товара не найден.
+
+  <h3 class="text-center text-white" v-else>
+    Товар с ID {{ product.id }} не найден.
   </h3>
 </template>
 
 <script>
 import AppPage from '../components/ui/AppPage'
+import { useRoute } from 'vue-router'
+import { useStore } from 'vuex'
+import { onMounted, ref } from 'vue'
+import AppLoader from '@/components/ui/AppLoader'
+import ProductActions from '@/components/products/ProductActions'
+
 export default {
-  components: {AppPage}
+  setup() {
+    const store = useStore()
+    const route = useRoute()
+    const loading = ref(true)
+    const product = ref()
+    const id = route.params.id
+
+    onMounted(async () => {
+      product.value = await store.dispatch('products/loadOne', id)
+      loading.value = false
+    })
+
+    return {
+      product,
+      loading
+    }
+  },
+  components: {
+    AppPage,
+    AppLoader,
+    ProductActions
+  }
 }
 </script>
 

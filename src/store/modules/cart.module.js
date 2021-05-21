@@ -1,60 +1,41 @@
-import axios from '../../axios/json-server'
-
 export default {
   namespaced: true,
   state () {
     return {
-      products: [],
-      total: null,
-      cartModel: {
-        '2': 3,
-        '5': 1,
-        '7': 5
-      },
-      totalCount: 0
+      cart: {}
     }
   },
   mutations: {
-    setProducts (state, products) {
-      state.products = products
+    clear(state) {
+      state.cart = {}
     },
-    total (state) {
-      state.total = state.products.reduce((total, amount) => total + amount.countSumm, 0)
-    },
-    changeCount (state, {id, count}) {
-      state.cartModel[id] = count
-    },
-    countSumm (state) {
-      state.products.map(product => product.countSumm = product.price * state.cartModel[product.id])
-    },
-    countTotal (state) {
-      const obj = state.cartModel
-      state.totalCount = Object.keys(obj).reduce((total, key) => total += obj[key], 0)
-    }
-  },
-  actions: {
-    async load ({ dispatch, commit, state } ) {
-      try {
-        const productsID = Object.keys(state.cartModel).map((id) => {
-          return `id=${id}`
-        }).join('&')
-        const { data } = await axios.get(`/products?${productsID}`)
-        commit('setProducts', data)
-        dispatch('update')
-      } catch(e) {
-        throw e
+    add(state, id) {
+      if (!state.cart[id]) {
+        state.cart[id] = 0
       }
+
+      const count = state.cart[id]
+      state.cart[id] = count + 1
     },
-    update ({ commit }) {
-      commit('total')
-      commit('countSumm')
-      commit('countTotal')
+    remove(state, id) {
+      const count = state.cart[id]
+
+      if (typeof count === 'undefined') {
+
+        return
+      }
+
+      if (count <= 1) {
+        delete state.cart[id]
+
+        return
+      }
+
+      state.cart[id] = count - 1
     }
   },
   getters: {
-    products: state => state.products,
-    total: state => state.total,
-    cartProductsModel: state => state.cartModel,
-    totalCount: state => state.totalCount
+    cart: state => state.cart,
+    count: state => Object.values(state.cart).reduce((acc, i) => acc + i, 0)
   }
 }
