@@ -1,42 +1,58 @@
 <template>
-  <AppLoader v-if="loader" />
-  <div class="card">
-    <h1>Корзина</h1>
+  <app-page title="Корзина">
+    <p class="text-center" v-if="isEmpty">В корзине пока ничего нет.</p>
 
-    <div v-if="products">
-      <CartTable :products="products" :cartModel="cartModel" />
+    <template v-else>
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Наименование</th>
+          <th>Количество</th>
+          <th>Цена (шт)</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="(value, key) in cart" :key="key">
+          <td>{{ title(key) }}</td>
+          <td>
+            <button class="btn danger" @click="delDecr(key)" :disabled="value >= count(key)">-</button>
+            <strong>{{ value }}</strong>
+            <button class="btn primary" @click="addIncr(key)">+</button>
+          </td>
+          <td>{{ $currency(price(key), 'RUB') }}</td>
+        </tr>
+        </tbody>
+      </table>
       <hr>
-      <p class="text-right"><strong>Всего: {{ $currency(totalSumm, 'RUB') }} руб.</strong></p>
+      <p class="text-right"><strong>Всего: {{ $currency(total, 'RUB') }}</strong></p>
       <p class="text-right">
         <button class="btn">Оплатить</button>
       </p>
-    </div>
-    <h3 v-else class="text-center">В корзине пока ничего нет</h3>
-  </div>
+    </template>
+  </app-page>
 </template>
 
 <script>
-import {ref, onMounted, computed, reactive} from 'vue'
+import { ref, computed } from 'vue'
 import { useStore } from 'vuex'
-import AppLoader from '@/components/ui/AppLoader'
-import CartTable from '@/components/cart/CartTable'
+import { useCartPage } from '@/use/cart-page'
+import AppPage from '../components/ui/AppPage'
+import { useProductCart } from '@/use/product-cart'
 
 export default {
   setup() {
     const store = useStore()
-    const loader = ref(false)
-    const products = computed(() => store.getters['cart/products'])
-    const totalSumm = computed(() => store.getters['cart/total'])
-    const cartModel = computed(() => store.getters['cart/cartProductsModel'])
+    const { addIncr, delDecr } = useProductCart()
+    // const cart = computed(() => store.getters['cart/cart'])
 
     return {
-      products,
-      AppLoader,
-      loader,
-      totalSumm,
-      CartTable,
-      cartModel
+      ...useCartPage(),
+      addIncr,
+      delDecr
     }
+  },
+  components: {
+    AppPage
   }
 }
 </script>
