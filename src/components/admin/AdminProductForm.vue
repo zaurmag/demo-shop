@@ -47,7 +47,7 @@
       </div>
 
       <div v-else>
-        <button class="btn danger" type="button" @click="remove">Удалить</button>
+        <button class="btn danger" type="button" @click="$emit('remove')">Удалить</button>
         <button class="btn" type="button" @click="$emit('close')">Закрыть</button>
       </div>
     </div>
@@ -56,19 +56,16 @@
 
 <script>
 import { useAdminProductForm } from '@/use/admin-product'
-import {computed, ref, watch} from 'vue'
+import { computed } from 'vue'
 import { useStore } from 'vuex'
-import { useRouter } from 'vue-router'
 
 export default {
-  emits: ['close', 'delete'],
+  emits: ['close', 'remove'],
   props: ['id', 'initialValues'],
   name: "AdminProductForm",
   setup(props, { emit }) {
     const store = useStore()
     const id = props.id
-    const router = useRouter()
-    const isDelete = ref(false)
     const categories = computed(() => store.getters['categories/categories'])
 
     const submit = async values => {
@@ -88,22 +85,9 @@ export default {
       } catch (e) {}
     }
 
-    const remove = () => {
-      modal.value = true
-      watch(isDelete, val => {
-        if (val) {
-          store.dispatch('products/delete', id)
-          router.push('/admin')
-          modal.value = false
-        }
-      })
-    }
-
     return {
       ...useAdminProductForm(submit, props.initialValues),
-      categories,
-      remove,
-      isDelete
+      categories
     }
   }
 }

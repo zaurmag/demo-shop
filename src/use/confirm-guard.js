@@ -8,12 +8,13 @@ export function useConfirmGuard(changed) {
   const router = useRouter()
 
   const navigate = () => {
-    leave.value = true
+    leave.value = false
     canLeave.value = true
     router.push(toLeave.value)
   }
 
   onBeforeRouteLeave(to => {
+    console.log(changed.value)
     toLeave.value = to.path
 
     if (canLeave.value) {

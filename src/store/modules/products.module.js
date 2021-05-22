@@ -31,11 +31,13 @@ export default {
     },
     async update ({ dispatch }, product) {
       try {
-        await axios.put(`/products/${product.id}`, product)
+        const { data } = await axios.put(`/products/${product.id}`, product)
         dispatch('setMessage', {
           value: 'Товар успешно обновлен',
           type: 'primary'
         }, {root: true})
+
+        return data
       } catch (e) {
         dispatch('setMessage', {
           value: e.message,

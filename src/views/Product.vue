@@ -1,7 +1,7 @@
 <template>
   <AppLoader v-if="loading" />
 
-  <app-page back center :title="product.title" v-else-if="product">
+  <app-page back="/" center :title="product.title" v-else-if="product">
     <img :src="product.img" />
     <p>Категория: <strong>{{ product.category }}</strong></p>
 
