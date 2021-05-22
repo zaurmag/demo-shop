@@ -1,5 +1,5 @@
 <template>
-  <div class="pagination">
+  <div class="pagination" v-if="items > 1">
     <ul class="pagination__list">
       <li class="pagination__nav pagination__nav--start">
         <button class="btn" type="button" @click="$emit('update:modelValue', modelValue - 1)" :disabled="modelValue === 1">Предыдущая</button>
@@ -15,13 +15,15 @@
 </template>
 
 <script>
+import { computed } from 'vue'
+
 export default {
   name: "AppPaginate",
   props: ['count', 'pages', 'modelValue'],
   setup (props) {
 
     return {
-      items: Math.ceil(props.count / props.pages)
+      items: computed(() => Math.ceil(props.count / props.pages))
     }
   }
 }
