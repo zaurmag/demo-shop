@@ -1,13 +1,15 @@
+const CART = 'cart'
 export default {
   namespaced: true,
   state () {
     return {
-      cart: {}
+      cart: JSON.parse(localStorage.getItem(CART)) ?? {}
     }
   },
   mutations: {
     clear(state) {
       state.cart = {}
+      localStorage.removeItem(CART)
     },
     add(state, id) {
       if (!state.cart[id]) {
@@ -16,6 +18,7 @@ export default {
 
       const count = state.cart[id]
       state.cart[id] = count + 1
+      localStorage.setItem(CART, JSON.stringify(state.cart))
     },
     remove(state, id) {
       const count = state.cart[id]
@@ -27,11 +30,13 @@ export default {
 
       if (count <= 1) {
         delete state.cart[id]
+        localStorage.setItem(CART, JSON.stringify(state.cart))
 
         return
       }
 
       state.cart[id] = count - 1
+      localStorage.setItem(CART, JSON.stringify(state.cart))
     }
   },
   getters: {
