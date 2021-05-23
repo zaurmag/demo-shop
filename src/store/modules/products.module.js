@@ -18,7 +18,6 @@ export default {
     async load ({ commit }) {
       try {
         const { data } = await axios.get('/products.json')
-        console.log(data)
         commit('setProducts', transform(data))
       } catch (e) {
         throw e

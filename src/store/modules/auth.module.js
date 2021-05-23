@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { error } from '@/utils/error'
 const JWT_TOKEN = 'jwt-token'
+const JWT_REFRESH_TOKEN = 'jwt-refresh-token'
 const EXPIRES_KEY = 'jwt-expires'
 
 export default {
@@ -8,17 +9,27 @@ export default {
   state() {
     return {
       token: localStorage.getItem(JWT_TOKEN),
+      refreshToken: localStorage.getItem(JWT_REFRESH_TOKEN),
       expiresDate: new Date(localStorage.getItem(EXPIRES_KEY)),
     }
   },
   mutations: {
-    setToken(state, token) {
-      state.token = token
-      localStorage.setItem(JWT_TOKEN, token)
+    setToken(state, {refreshToken, idToken, expiresIn = '3600'}) {
+      const expiresDate = new Date(new Date().getTime() + Number(expiresIn) * 1000)
+      state.token = idToken
+      state.refreshToken = refreshToken
+      state.expiresDate = expiresDate
+      localStorage.setItem(JWT_TOKEN, idToken)
+      localStorage.setItem(JWT_REFRESH_TOKEN, refreshToken)
+      localStorage.setItem(EXPIRES_KEY, expiresDate.toString())
     },
     logout(state) {
       state.token = null
+      state.refreshToken = null
+      state.expiresDate = null
       localStorage.removeItem(JWT_TOKEN)
+      localStorage.removeItem(JWT_REFRESH_TOKEN)
+      localStorage.removeItem(EXPIRES_KEY)
     },
   },
   actions: {
@@ -26,8 +37,7 @@ export default {
       try {
         const url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.VUE_APP_FB_KEY}`
         const { data } = await axios.post(url, {...payload, returnSecureToken: true})
-        console.log(data)
-        commit('setToken', data.idToken)
+        commit('setToken', data)
         commit('clearMessage', null, {root: true})
       } catch(e) {
         dispatch('setMessage', {
@@ -38,11 +48,27 @@ export default {
         })
         throw new Error()
       }
+    },
+    async refresh({ state, commit }) {
+      try {
+        const { data } = await axios.post(`https://securetoken.googleapis.com/v1/token?key=${process.env.VUE_APP_FB_KEY}`, {
+          grand_type: 'refresh_token',
+          refresh_token: state.refreshToken
+        })
+
+        commit('setToken', {
+          refreshToken: data.refresh_token,
+          idToken: data.id_token,
+          expiredIn: data.expires_in
+        })
+      } catch(e) {
+        console.error('Error:', e.message)
+      }
     }
   },
   getters: {
     token: state => state.token,
-    isAuthenticated: (_, getters) => !!getters.token, // && !getters.isExpired
+    isAuthenticated: (_, getters) => !!getters.token && !getters.isExpired,
     isExpired: state => new Date() >= state.expiresDate
   },
 }

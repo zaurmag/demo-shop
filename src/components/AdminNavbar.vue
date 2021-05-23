@@ -13,7 +13,7 @@
         <a href="#" @click.prevent="logout">Выход</a>
       </li>
       <li class="go-shop">
-        <router-link to="/">В магазин</router-link>
+        <router-link class="btn primary btn-sm" to="/" target="_blank">В магазин</router-link>
       </li>
     </ul>
   </nav>
@@ -43,14 +43,10 @@ export default {
 <style scoped lang="scss">
   .go-shop {
     margin-left: 15px;
-
-    a {
-      color: #0bac6b;
-    }
   }
   .logout {
     a {
-      color: #d22043;
+      color: #ca0000;
     }
   }
 </style>

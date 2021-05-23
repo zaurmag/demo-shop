@@ -13,9 +13,9 @@ dbtAxios.interceptors.request.use(async config => {
     return config
   }
 
-  // if (store.getters['auth/isExpired']) {
-  //   await store.dispatch('auth/refresh')
-  // }
+  if (store.getters['auth/isExpired']) {
+    await store.dispatch('auth/refresh')
+  }
 
   config.params['auth'] = store.getters['auth/token']
 

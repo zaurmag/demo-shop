@@ -104,6 +104,11 @@ h3 {
     box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.3);
 }
 
+.btn.btn-sm {
+    font-size: 10px;
+    padding: 5px 15px;
+}
+
 .btn.primary {
     background: #42b983;
     color: #fff;

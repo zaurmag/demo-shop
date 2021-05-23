@@ -16,7 +16,7 @@
         <router-link to="/auth">Вход</router-link>
       </li>
       <li v-if="isAuth">
-        <router-link to="/admin">Админка</router-link>
+        <router-link class="btn btn-sm" to="/admin" target="_blank">Админка</router-link>
       </li>
     </ul>
   </nav>
