@@ -1,4 +1,5 @@
-import axios from '@/axios/json-server'
+import axios from '@/axios/dbase'
+import { transform } from '@/utils/transform'
 
 export default {
   namespaced: true,
@@ -8,30 +9,33 @@ export default {
     }
   },
   mutations: {
-    setCategories (state, categories) {
+    setCategory (state, categories) {
       state.categories = categories
+    },
+    removeCategory (state, id) {
+      state.categories = state.categories.filter(с => c.id !== id)
     }
   },
   actions: {
     async load ({ commit }) {
       try {
-        const { data } = await axios.get('/categories')
-        await commit('setCategories', data)
+        const { data } = await axios.get('/categories.json')
+        await commit('setCategory', transform(data))
       } catch (e) {
         throw e
       }
     },
     async loadOne (_, id) {
       try {
-        const { data } = await axios.get(`/categories/${+id}`)
-        return data
+        const { data } = await axios.get(`/categories/${id}.json`)
+        return { ...data, id}
       } catch (e) {
         throw e
       }
     },
     async update ({ dispatch }, category) {
       try {
-        await axios.put(`/categories/${category.id}`, category)
+        await axios.put(`/categories/${category.id}.json`, category)
         dispatch('setMessage', {
           value: 'Категория успешно обновлена',
           type: 'primary'
@@ -43,9 +47,11 @@ export default {
         }, {root: true})
       }
     },
-    async add ({ dispatch }, category) {
+    async add ({ dispatch, commit }, category) {
       try {
-        await axios.post(`/categories/`, category)
+        const { data } = await axios.post(`/categories.json`, category)
+        commit('setCategory', { ...category, id: data.name })
+
         dispatch('setMessage', {
           value: 'Категория успешно добавлена',
           type: 'primary'
@@ -57,9 +63,11 @@ export default {
         }, {root: true})
       }
     },
-    async delete ({ dispatch }, id) {
+    async delete ({ dispatch, commit }, id) {
       try {
-        await axios.delete(`/categories/${id}`)
+        await axios.delete(`/categories/${id}.json`)
+        commit('removeCategory', id)
+
         dispatch('setMessage', {
           value: 'Категория успешно удалена',
           type: 'primary'

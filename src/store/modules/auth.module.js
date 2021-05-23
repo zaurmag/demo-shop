@@ -1,12 +1,14 @@
 import axios from 'axios'
 import { error } from '@/utils/error'
 const JWT_TOKEN = 'jwt-token'
+const EXPIRES_KEY = 'jwt-expires'
 
 export default {
   namespaced: true,
   state() {
     return {
       token: localStorage.getItem(JWT_TOKEN),
+      expiresDate: new Date(localStorage.getItem(EXPIRES_KEY)),
     }
   },
   mutations: {
@@ -24,6 +26,7 @@ export default {
       try {
         const url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.VUE_APP_FB_KEY}`
         const { data } = await axios.post(url, {...payload, returnSecureToken: true})
+        console.log(data)
         commit('setToken', data.idToken)
         commit('clearMessage', null, {root: true})
       } catch(e) {
@@ -38,11 +41,8 @@ export default {
     }
   },
   getters: {
-    token(state) {
-      return state.token
-    },
-    isAuthenticated(_, getters) {
-      return !!getters.token
-    },
+    token: state => state.token,
+    isAuthenticated: (_, getters) => !!getters.token, // && !getters.isExpired
+    isExpired: state => new Date() >= state.expiresDate
   },
 }

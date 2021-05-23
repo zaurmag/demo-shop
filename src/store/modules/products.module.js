@@ -1,4 +1,6 @@
-import axios from '@/axios/json-server'
+import axios from '@/axios/dbase'
+import store from '../../store'
+import { transform } from '@/utils/transform'
 
 export default {
   namespaced: true,
@@ -15,23 +17,24 @@ export default {
   actions: {
     async load ({ commit }) {
       try {
-        const { data } = await axios.get('/products')
-        commit('setProducts', data)
+        const { data } = await axios.get('/products.json')
+        console.log(data)
+        commit('setProducts', transform(data))
       } catch (e) {
         throw e
       }
     },
     async loadOne (_, id) {
       try {
-        const { data } = await axios.get(`/products/${+id}`)
-        return data
+        const { data } = await axios.get(`/products/${id}.json`)
+        return { ...data, id}
       } catch (e) {
         throw e
       }
     },
     async update ({ dispatch }, product) {
       try {
-        const { data } = await axios.put(`/products/${product.id}`, product)
+        const { data } = await axios.put(`/products/${product.id}.json`, product)
         dispatch('setMessage', {
           value: 'Товар успешно обновлен',
           type: 'primary'
@@ -47,7 +50,8 @@ export default {
     },
     async add ({ dispatch }, product) {
       try {
-        await axios.post(`/products/`, product)
+        const token = store.getters['auth/token']
+        await axios.post(`/products.json`, product)
         dispatch('setMessage', {
           value: 'Товар успешно добавлен',
           type: 'primary'
@@ -61,7 +65,7 @@ export default {
     },
     async delete ({ dispatch }, id) {
       try {
-        await axios.delete(`/products/${id}`)
+        await axios.delete(`/products/${id}.json`)
         dispatch('setMessage', {
           value: 'Товар успешно удален',
           type: 'primary'

@@ -3,6 +3,14 @@ import store from '../store'
 
 const routes = [
   {
+    path: '/test',
+    name: 'Test',
+    component: () => import('../views/Test.vue'),
+    meta: {
+      layout: 'main'
+    }
+  },
+  {
     path: '/',
     name: 'Shop',
     component: () => import('../views/Shop.vue'),
