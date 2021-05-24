@@ -3,6 +3,7 @@ import auth from './modules/auth.module'
 import cart from './modules/cart.module'
 import products from './modules/products.module'
 import categories from './modules/categories.module'
+import orders from './modules/orders.module'
 
 const plugins = []
 
@@ -36,6 +37,7 @@ export default createStore({
     auth,
     cart,
     products,
-    categories
+    categories,
+    orders
   },
 })

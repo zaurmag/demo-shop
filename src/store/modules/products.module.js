@@ -12,6 +12,10 @@ export default {
   mutations: {
     setProducts (state, products) {
       state.products = products
+    },
+    updateProductCount(state, {id, count}) {
+      const product = state.products.find(p => p.id === id)
+      product.count = count
     }
   },
   actions: {

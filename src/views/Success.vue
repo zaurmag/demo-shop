@@ -1,6 +1,6 @@
 <template>
-  <app-page title="Список заказов">
-      <p>Список заказов</p>
+  <app-page title="Спасибо за покупку!">
+    <button @click="$router.push('/')" class="btn">Вернуться на главную</button>
   </app-page>
 </template>
 
@@ -8,7 +8,7 @@
 import AppPage from '@/components/ui/AppPage'
 
 export default {
-  name: "Orders",
+  name: 'Success',
   components: {
     AppPage
   }

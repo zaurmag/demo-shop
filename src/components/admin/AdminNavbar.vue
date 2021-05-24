@@ -3,13 +3,16 @@
     <h3>Админка</h3>
 
     <ul class="navbar-menu">
-      <li v-if="isAuth">
+      <li>
         <router-link to="/admin/products">Товары</router-link>
       </li>
-      <li v-if="isAuth">
+      <li>
         <router-link to="/admin/categories">Категории</router-link>
       </li>
-      <li class="logout" v-if="isAuth">
+      <li>
+        <router-link to="/admin/orders">Заказы</router-link>
+      </li>
+      <li class="logout">
         <a href="#" @click.prevent="logout">Выход</a>
       </li>
       <li class="go-shop">
@@ -20,7 +23,6 @@
 </template>
 
 <script>
-import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 
@@ -33,8 +35,7 @@ export default {
       logout: () => {
         store.commit('auth/logout')
         router.push('/auth')
-      },
-      isAuth: computed(() => store.getters['auth/isAuthenticated'])
+      }
     }
   },
 }

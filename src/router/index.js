@@ -20,12 +20,12 @@ const routes = [
     },
   },
   {
-    path: '/orders',
-    name: 'orders',
-    component: () => import('../views/Orders.vue'),
+    path: '/success',
+    name: 'Success',
+    component: () => import('../views/Success.vue'),
     meta: {
       layout: 'main',
-      auth: true,
+      auth: false,
     },
   },
   {
@@ -95,7 +95,18 @@ const routes = [
         name: 'AdminCategory',
         props: true,
         component: () => import('../views/admin/Category')
-      }
+      },
+      {
+        path: 'orders',
+        name: 'AdminOrders',
+        component: () => import('../views/admin/Orders.vue')
+      },
+      {
+        path: 'order/:id',
+        name: 'AdminOrder',
+        props: true,
+        component: () => import('../views/admin/Order.vue')
+      },
     ]
   }
 ]
