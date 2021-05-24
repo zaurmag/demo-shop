@@ -18,11 +18,11 @@
 
 <script>
 import AppPage from '@/components/ui/AppPage'
-import ProductCard from '@/components/ProductCard'
+import ProductCard from '@/components/products/ProductCard'
 import AppLoader from '@/components/ui/AppLoader'
 import { useStore } from 'vuex'
 import {computed, onMounted, ref} from 'vue'
-import ProductsFilter from '@/components/ProductsFilter'
+import ProductsFilter from '@/components/products/ProductFilter'
 import { useRouter, useRoute } from 'vue-router'
 import AppPaginate from '@/components/ui/AppPaginate'
 import { useProductPaginate } from '@/use/product-paginate'

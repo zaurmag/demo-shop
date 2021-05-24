@@ -25,9 +25,13 @@
       </table>
       <hr>
       <p class="text-right"><strong>Всего: {{ $currency(total, 'RUB') }}</strong></p>
-      <p class="text-right">
+      <p class="text-right" v-if="isAuth">
         <button class="btn">Оплатить</button>
       </p>
+      <template v-else>
+        <h3>Для совершения покупки авторизуйтесь в системе!</h3>
+        <AuthForm />
+      </template>
     </template>
   </app-page>
 </template>
@@ -38,21 +42,24 @@ import { useStore } from 'vuex'
 import { useCartPage } from '@/use/cart-page'
 import AppPage from '../components/ui/AppPage'
 import { useProductCart } from '@/use/product-cart'
+import AuthForm from '@/components/AuthForm'
 
 export default {
   setup() {
     const store = useStore()
     const { addIncr, delDecr } = useProductCart()
-    // const cart = computed(() => store.getters['cart/cart'])
+    const isAuth = computed(() => store.getters['auth/isAuthenticated'])
 
     return {
       ...useCartPage(),
       addIncr,
-      delDecr
+      delDecr,
+      isAuth
     }
   },
   components: {
-    AppPage
+    AppPage,
+    AuthForm
   }
 }
 </script>

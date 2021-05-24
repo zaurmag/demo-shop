@@ -1,44 +1,23 @@
 <template>
-  <app-page title="Авторизация">
-    <form @submit.prevent="onSubmit">
-      <div :class="['form-control', { invalid: eError }]">
-        <label for="email">E-mail</label>
-        <input type="email" id="email" v-model="email" @blur="eBlur" />
-        <small v-if="eError">{{ eError }}</small>
-      </div>
-
-      <div :class="['form-control', { invalid: pError }]">
-        <label for="password">Пароль</label>
-        <input type="password" id="password" v-model="password" @blur="pBlur" />
-        <small v-if="pError">{{ pError }}</small>
-      </div>
-
-      <button
-        type="submit"
-        class="btn primary"
-        :disabled="isSubmitting || isToManyAttempts"
-      >
-        Войти
-      </button>
-      <router-link :to="{name: 'Register'}" custom v-slot="{ navigate }">
-        <button class="btn" type="button" @click="navigate">Регистрация</button>
-      </router-link>
-    </form>
+  <app-page back="/" title="Авторизация">
+    <AuthForm />
   </app-page>
 </template>
 
 <script>
-import { useLoginForm } from '@/use/login-form'
 import { useStore } from 'vuex'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { error } from '@/utils/error'
 import AppPage from '@/components/ui/AppPage'
+import AuthForm from '@/components/AuthForm'
+import { computed, watch } from 'vue'
 
 export default {
   name: 'Auth',
   setup() {
     const store = useStore()
     const route = useRoute()
+    const router = useRouter()
 
     if (route.query.message) {
       store.dispatch('setMessage', {
@@ -47,12 +26,17 @@ export default {
       })
     }
 
-    return {
-      ...useLoginForm('auth')
-    }
+    const isAuth = computed(() => store.getters['auth/isAuthenticated'])
+
+    watch(isAuth, val => {
+      if (val && route.path === '/auth') {
+        router.push('/')
+      }
+    })
   },
   components: {
-    AppPage
+    AppPage,
+    AuthForm
   }
 }
 </script>

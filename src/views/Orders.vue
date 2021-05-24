@@ -1,8 +1,6 @@
 <template>
   <app-page title="Список заказов">
-    <div class="card">
       <p>Список заказов</p>
-    </div>
   </app-page>
 </template>
 

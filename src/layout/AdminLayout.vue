@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import AdminNavbar from '@/components/AdminNavbar'
+import AdminNavbar from '@/components/admin/AdminNavbar'
 import AppMessage from '@/components/ui/AppMessage'
 
 export default {

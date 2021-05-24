@@ -21,11 +21,11 @@
 
 <script>
 import AppPage from '@/components/ui/AppPage'
-import ProductCard from '@/components/ProductCard'
+import ProductCard from '@/components/products/ProductCard'
 import AppLoader from '@/components/ui/AppLoader'
 import { useStore } from 'vuex'
 import { computed, onMounted, ref, watch } from 'vue'
-import CategoriesModule from '@/components/ProductsFilter'
+import CategoriesModule from '@/components/products/ProductFilter'
 import { useRoute } from 'vue-router'
 
 export default {
