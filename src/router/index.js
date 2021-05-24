@@ -20,9 +20,27 @@ const routes = [
     },
   },
   {
+    path: '/orders',
+    name: 'orders',
+    component: () => import('../views/Orders.vue'),
+    meta: {
+      layout: 'main',
+      auth: true,
+    },
+  },
+  {
     path: '/auth',
     name: 'Auth',
     component: () => import('../views/Auth.vue'),
+    meta: {
+      layout: 'auth',
+      auth: false,
+    },
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: () => import('../views/Register.vue'),
     meta: {
       layout: 'auth',
       auth: false,
@@ -53,7 +71,7 @@ const routes = [
     component: () => import('../views/admin/Admin'),
     meta: {
       layout: 'admin',
-      auth: true
+      admin: true
     },
     children: [
       {
@@ -91,15 +109,25 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const requireAuth = to.meta.auth
-  const isAuthenticated = store.getters['auth/isAuthenticated']
+  const requireAdmin = to.meta.admin
 
-  if (requireAuth && isAuthenticated) {
-    next()
-  } else if (requireAuth && !isAuthenticated) {
-    next('/auth?message=auth')
-  } else {
-    next()
+  if (requireAdmin) {
+    if (store.getters['auth/isAdmin']) {
+      return next()
+    } else {
+      return next('/auth?message=admin')
+    }
   }
+
+  if (requireAuth) {
+    if (store.getters['auth/isAuthenticated']) {
+      return next()
+    } else {
+      next('/auth?message=auth')
+    }
+  }
+
+  next()
 })
 
 export default router
