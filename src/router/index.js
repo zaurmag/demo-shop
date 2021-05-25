@@ -65,6 +65,15 @@ const routes = [
     },
   },
   {
+    path: '/orders',
+    name: 'Orders',
+    component: () => import('../views/Orders.vue'),
+    meta: {
+      layout: 'main',
+      auth: true,
+    },
+  },
+  {
     path: '/admin',
     name: 'Admin',
     redirect: '/admin/products',
