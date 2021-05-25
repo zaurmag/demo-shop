@@ -22,6 +22,12 @@
     <router-link :to="{name: 'Register'}" custom v-slot="{ navigate }">
       <button class="btn" type="button" @click="navigate">Регистрация</button>
     </router-link>
+
+    <br />
+    <br />
+    <p>Тестовые данные для входа:</p>
+    <button class="btn warning btn-sm" @click="email = 'admin@zaurmag.ru'; password='123456'">Администратор</button>
+    <button class="btn btn-sm" @click="email = 'demo@zaurmag.ru'; password='321321321'">Пользователь</button>
   </form>
 </template>
 
@@ -31,6 +37,8 @@ import { useLoginForm } from '@/use/login-form'
 export default {
   name: 'AuthForm',
   setup() {
+    const { email } = useLoginForm()
+    email.value = 'demo@zaurmag.ru'
 
     return {
       ...useLoginForm()

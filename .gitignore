@@ -24,3 +24,6 @@ pnpm-debug.log*
 *.sw?
 
 package-lock.json
+/.firebaserc
+/firebase.json
+/.firebase/hosting.ZGlzdA.cache

@@ -26,7 +26,7 @@ export default {
     }
   },
   setup(props) {
-    document.title = `${props.title} | Интернет магазин`
+    document.title = `${props.title} | Интернет магазин на Vue`
   }
 }
 </script>

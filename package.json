@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "startServerServe": "concurrently \"vue-cli-service serve\" \"json-server --watch db.json\""
+    "startServerServe": "concurrently \"vue-cli-service serve\" \"json-server --watch db.json\"",
+    "fdeploy": "firebase deploy"
   },
   "dependencies": {
     "axios": "^0.21.1",
