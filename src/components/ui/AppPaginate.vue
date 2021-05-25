@@ -11,19 +11,29 @@
         <button class="btn" type="button" @click="$emit('update:modelValue', modelValue + 1)" :disabled="modelValue === items">Следующая</button>
       </li>
     </ul>
+
+    <div class="form-control pagination__select-size">
+      <select name="selSize" id="selSize" v-model="selectSize" @change="$emit('changeSize', selectSize)">
+        <option value="6">6</option>
+        <option value="9">9</option>
+        <option value="12">12</option>
+      </select>
+    </div>
   </div>
 </template>
 
 <script>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 
 export default {
   name: "AppPaginate",
   props: ['count', 'pages', 'modelValue'],
   setup (props) {
+    const selectSize = ref(props.pages)
 
     return {
-      items: computed(() => Math.ceil(props.count / props.pages))
+      items: computed(() => Math.ceil(props.count / selectSize.value)),
+      selectSize
     }
   }
 }
@@ -31,9 +41,10 @@ export default {
 
 <style scoped lang="scss" rel="stylesheet/scss">
   .pagination {
-    margin-top: 30px;
     padding-top: 10px;
     padding-bottom: 10px;
+    display: flex;
+    align-items: center;
 
     &__list {
       align-items: center;
@@ -75,6 +86,16 @@ export default {
 
       .btn {
         margin: 0;
+      }
+    }
+
+    &__select-size {
+      margin-left: 30px;
+      margin-bottom: 0;
+
+      select {
+        font-size: 14px;
+        padding: 6px 12px;
       }
     }
   }

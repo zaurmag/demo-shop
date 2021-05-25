@@ -9,7 +9,7 @@
       :products="paginateProducts"
       @open="open"
     />
-    <AppPaginate :count="products.length" :pages="PAGE_SIZE" v-model="page" />
+    <AppPaginate :count="products.length" :pages="PAGE_SIZE" v-model="page" @changeSize="changePageSize" />
   </app-page>
 
   <teleport to="body">
@@ -40,7 +40,7 @@ export default {
     const store = useStore()
     const router = useRouter()
     const modal = ref(false)
-    const PAGE_SIZE = 5
+    const PAGE_SIZE = ref(6)
 
     onMounted(async () => {
       await store.dispatch('products/load')

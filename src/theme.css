@@ -642,6 +642,12 @@ small.small {
 .mt-20 {
     margin-top: 20px;
 }
+.mb-0 {
+    margin-bottom: 0 !important;
+}
 .not-avilable {
     color: #e53935;
+}
+.d-flex {
+    display: flex;
 }

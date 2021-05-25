@@ -10,7 +10,7 @@
           :products="paginateProducts"
         />
 
-        <AppPaginate :count="products.length" :pages="PAGE_SIZE" v-model="page" />
+        <AppPaginate :count="products.length" :pages="PAGE_SIZE" v-model="page" @changeSize="changePageSize" />
       </div>
     </div>
   </app-page>
@@ -21,7 +21,7 @@ import AppPage from '@/components/ui/AppPage'
 import ProductCard from '@/components/products/ProductCard'
 import AppLoader from '@/components/ui/AppLoader'
 import { useStore } from 'vuex'
-import {computed, onMounted, ref} from 'vue'
+import {computed, onMounted, ref, watch} from 'vue'
 import ProductsFilter from '@/components/products/ProductFilter'
 import { useRouter, useRoute } from 'vue-router'
 import AppPaginate from '@/components/ui/AppPaginate'
@@ -35,7 +35,7 @@ export default {
     const router = useRouter()
     const route = useRoute()
     const categories = computed(() => store.getters['categories/categories'])
-    const PAGE_SIZE = 6
+    const PAGE_SIZE = ref(6)
 
     const filter = ref({
       search: route.query.search,

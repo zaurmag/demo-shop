@@ -6,6 +6,7 @@
       <table class="table">
         <thead>
           <tr>
+            <th>#</th>
             <th>Наименование</th>
             <th>Количество</th>
             <th>Цена</th>
@@ -13,7 +14,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="product in order.items">
+          <tr v-for="(product, index) in order.items">
+            <td>{{ index + 1 }}</td>
             <td>{{ product.title }}</td>
             <td>{{ product.count }}</td>
             <td>{{ $currency(product.price) }}</td>

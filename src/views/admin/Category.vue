@@ -1,7 +1,7 @@
 <template>
   <AppLoader v-if="loading" />
 
-  <app-page v-else-if="category" :title="category.title">
+  <app-page v-else-if="category" back="/admin/categories" :title="category.title">
     <AdminCategoryForm :id="id" :initialValues="initialValues" @close="close" @remove="confirmLeave = true">
       <template #edit />
     </AdminCategoryForm>
