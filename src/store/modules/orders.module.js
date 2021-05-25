@@ -1,6 +1,5 @@
 import axios from '@/axios/dbase'
 import { transform } from '@/utils/transform'
-import { computed } from 'vue'
 import { dateFormat } from '@/utils/date'
 
 export default {
@@ -19,13 +18,12 @@ export default {
     async load({ commit }) {
       try {
         const { data } = await axios.get('/orders.json')
-        console.log(data)
         commit('setOrders', transform(data))
       } catch (e) {
         console.error(e.message)
       }
     },
-    async loadOne({ commit }, id) {
+    async loadOne(_, id) {
       const { data } = await axios.get(`/orders/${id}.json`)
       return {
         ...data,

@@ -31,7 +31,7 @@
 import AppPage from '@/components/ui/AppPage'
 import AppLoader from '@/components/ui/AppLoader'
 import { useStore } from 'vuex'
-import { onMounted, ref, computed } from "vue";
+import { onMounted, ref, computed } from 'vue'
 
 export default {
   name: 'Orders',

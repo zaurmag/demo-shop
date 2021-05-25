@@ -9,13 +9,18 @@
       <li>
         <router-link to="/cart">Корзина [{{ cartCount }}]</router-link>
       </li>
-      <li v-if="isAuth">
+      <template v-if="isAuth">
+      <li>
+        <router-link :to="{name: 'Orders'}">Мои заказы</router-link>
+      </li>
+      <li>
         <a href="#" @click.prevent="logout">Выход</a>
       </li>
+      </template>
       <li v-if="!isAuth">
         <router-link to="/auth">Вход</router-link>
       </li>
-      <li v-if="isAuth && isAdmin">
+      <li v-if="isAdmin">
         <router-link class="btn btn-sm" to="/admin" target="_blank">Админка</router-link>
       </li>
       <li v-if="isAuth && username">
